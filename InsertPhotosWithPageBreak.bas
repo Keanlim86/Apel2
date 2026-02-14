@@ -22,8 +22,7 @@ If IsArray(PicList) Then
     
     For lLoop = LBound(PicList) To UBound(PicList)
         Set PicRange = Cells(xRowIndex, xColIndex)
-        Set sShape = ActiveSheet.Shapes.AddPicture2(PicList(lLoop), msoFalse, msoCTrue, _
-            PicRange.Left, PicRange.Top, PicRange.Width, PicRange.Height, compress)
+        Set sShape = ActiveSheet.Shapes.AddPicture2(PicList(lLoop), msoFalse, msoCTrue, PicRange.Left, PicRange.Top, PicRange.Width, PicRange.Height, compress)
         xRowIndex = xRowIndex + 3
     Next
     
