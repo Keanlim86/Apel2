@@ -7,6 +7,7 @@ Dim xRowIndex As Long
 Dim xColIndex As Long
 Dim lLoop As Long
 Dim LastRow As Long
+Dim PicCount As Long
 
 ' Find the last picture by checking all shapes
 Dim maxRow As Long
@@ -30,14 +31,24 @@ On Error Resume Next
 PicList = Application.GetOpenFilename(PicFormat, MultiSelect:=True)
 
 If IsArray(PicList) Then
+    ' Count number of pictures being inserted
+    PicCount = UBound(PicList) - LBound(PicList) + 1
+    
     For lLoop = LBound(PicList) To UBound(PicList)
         Set PicRange = Cells(xRowIndex, xColIndex)
-        Set sShape = ActiveSheet.Shapes.AddPicture2(PicList(lLoop), msoFalse, msoCTrue, PicRange.Left, PicRange.Top, PicRange.Width, PicRange.Height, compress)
+        Set sShape = ActiveSheet.Shapes.AddPicture2(PicList(lLoop), msoFalse, msoCTrue, _
+            PicRange.Left, PicRange.Top, PicRange.Width, PicRange.Height, compress)
         xRowIndex = xRowIndex + 3
     Next
     
-    ' Calculate last row
-    LastRow = xRowIndex - 3 + 1
+    ' Calculate last row based on odd/even count
+    If PicCount Mod 2 = 1 Then
+        ' Odd number of pictures - add extra space
+        LastRow = xRowIndex - 3 + 4
+    Else
+        ' Even number of pictures
+        LastRow = xRowIndex - 3 + 1
+    End If
     
     ' Update print area
     With ActiveSheet.PageSetup
