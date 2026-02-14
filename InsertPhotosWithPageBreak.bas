@@ -34,10 +34,7 @@ If IsArray(PicList) Then
         ' Even number of pictures
         LastRow = xRowIndex - 3 + 1
     End If
-    
-    ' Insert page break after the last picture
-    ActiveSheet.HPageBreaks.Add Before:=Cells(xRowIndex, 1)
-    
+
     ' Update print area
     With ActiveSheet.PageSetup
         .PrintArea = "$A$1:$C$" & LastRow
